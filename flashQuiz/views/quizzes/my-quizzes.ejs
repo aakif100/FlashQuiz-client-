@@ -1,0 +1,25 @@
+<div class="container mt-4">
+    <h2>My Quizzes</h2>
+    
+    <% if (quizzes.length > 0) { %>
+        <div class="row">
+            <% quizzes.forEach(quiz => { %>
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= quiz.title %></h5>
+                            <p class="card-text">Questions: <%= quiz.questions.length %></p>
+                            <form action="/quizzes/<%= quiz._id %>?_method=DELETE" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-danger">Delete Quiz</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p>No quizzes created yet.</p>
+    <% } %>
+
+    <a href="/quizzes/create" class="btn btn-primary mt-3">Create New Quiz</a>
+</div>

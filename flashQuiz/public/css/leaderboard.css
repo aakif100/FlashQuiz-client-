@@ -1,0 +1,123 @@
+.leaderboard-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.leaderboard-title {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-table-container {
+    overflow-x: auto;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.leaderboard-table th {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.leaderboard-row {
+    transition: transform 0.3s ease;
+    animation: slideIn 0.5s ease-out;
+}
+
+.leaderboard-row:hover {
+    transform: translateX(10px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.leaderboard-row td {
+    padding: 1rem;
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.top-three {
+    font-weight: 600;
+}
+
+.rank-1 { background: rgba(255, 215, 0, 0.1); }
+.rank-2 { background: rgba(192, 192, 192, 0.1); }
+.rank-3 { background: rgba(205, 127, 50, 0.1); }
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background: var(--secondary-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+}
+
+.score {
+    font-weight: bold;
+    color: #ffd700;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .leaderboard-container {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .leaderboard-title {
+        font-size: 2rem;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+        padding: 0.75rem;
+    }
+
+    .user-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+}

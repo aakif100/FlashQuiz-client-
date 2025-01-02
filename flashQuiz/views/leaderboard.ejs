@@ -1,0 +1,39 @@
+<%- include('./partials/header') %>
+
+<div class="leaderboard-container">
+    <h1 class="leaderboard-title">Quiz Champions</h1>
+    
+    <div class="leaderboard-table-container">
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>User</th>
+                    <th>Score</th>
+                    <th>Quizzes Completed</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% leaderboardData.forEach((user, index) => { %>
+                    <tr class="leaderboard-row <%= index < 3 ? 'top-three rank-' + (index + 1) : '' %>">
+                        <td class="rank"><%= index + 1 %></td>
+                        <td class="user-info">
+                            <div class="user-avatar">
+                                <%= user.username.charAt(0).toUpperCase() %>
+                            </div>
+                            <span class="username"><%= user.username %></span>
+                        </td>
+                        <td class="score">
+                            <%= Math.round(user.totalScore).toLocaleString() %> pts
+                        </td>
+                        <td class="quizzes-completed">
+                            <%= user.quizzesCompleted %> <%= user.quizzesCompleted === 1 ? 'quiz' : 'quizzes' %>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%- include('./partials/footer') %>

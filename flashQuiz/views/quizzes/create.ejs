@@ -1,0 +1,138 @@
+<div class="container">
+  <div class="glass-card">
+    <h2 class="text-center mb-4">Create New Quiz</h2>
+    <form action="/quizzes/create" method="POST" id="quizForm" onsubmit="return validateForm()">
+      <div class="mb-3">
+        <input type="text" class="form-control" name="title" placeholder="Quiz Title" required>
+      </div>
+      <div class="mb-3">
+        <select class="form-control" name="subject" required>
+          <option value="">Select Subject</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="Science">Science</option>
+          <option value="History">History</option>
+          <option value="Literature">Literature</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <textarea class="form-control" name="description" placeholder="Quiz Description"></textarea>
+      </div>
+      
+      <div id="questionsContainer">
+        <div class="question-block glass-card">
+          <h5>Question 1</h5>
+          <input type="text" class="form-control mb-2" name="questions[0][questionText]" placeholder="Question Text" required minlength="3">
+          <div class="options-container">
+            <div class="option-wrapper">
+              <label>Option 0:</label>
+              <input type="text" class="form-control mb-2" name="questions[0][options][]" placeholder="First Option" required minlength="1">
+            </div>
+            <div class="option-wrapper">
+              <label>Option 1:</label>
+              <input type="text" class="form-control mb-2" name="questions[0][options][]" placeholder="Second Option" required minlength="1">
+            </div>
+            <div class="option-wrapper">
+              <label>Option 2:</label>
+              <input type="text" class="form-control mb-2" name="questions[0][options][]" placeholder="Third Option" required minlength="1">
+            </div>
+            <div class="option-wrapper">
+              <label>Option 3:</label>
+              <input type="text" class="form-control mb-2" name="questions[0][options][]" placeholder="Fourth Option" required minlength="1">
+            </div>
+          </div>
+          <label>Correct Answer (0-3):</label>
+          <input type="number" class="form-control" name="questions[0][correctAnswer]" min="0" max="3" required>
+          <small class="text-muted">Enter 0 for first option, 1 for second, 2 for third, or 3 for fourth option</small>
+        </div>
+      </div>
+      
+      <button type="button" class="btn btn-glass mt-3" onclick="addQuestion()">Add Question</button>
+      <button type="submit" class="btn btn-glass mt-3 float-end">Create Quiz</button>
+    </form>
+  </div>
+</div>
+
+<script>
+let questionCount = 1;
+
+function addQuestion() {
+  const container = document.getElementById('questionsContainer');
+  const newQuestion = document.createElement('div');
+  newQuestion.className = 'question-block glass-card mt-3';
+  questionCount++;
+  
+  newQuestion.innerHTML = `
+    <h5>Question ${questionCount}</h5>
+    <input type="text" class="form-control mb-2" name="questions[${questionCount-1}][questionText]" placeholder="Question Text" required minlength="3">
+    <div class="options-container">
+      <div class="option-wrapper">
+        <label>Option 0:</label>
+        <input type="text" class="form-control mb-2" name="questions[${questionCount-1}][options][]" placeholder="First Option" required minlength="1">
+      </div>
+      <div class="option-wrapper">
+        <label>Option 1:</label>
+        <input type="text" class="form-control mb-2" name="questions[${questionCount-1}][options][]" placeholder="Second Option" required minlength="1">
+      </div>
+      <div class="option-wrapper">
+        <label>Option 2:</label>
+        <input type="text" class="form-control mb-2" name="questions[${questionCount-1}][options][]" placeholder="Third Option" required minlength="1">
+      </div>
+      <div class="option-wrapper">
+        <label>Option 3:</label>
+        <input type="text" class="form-control mb-2" name="questions[${questionCount-1}][options][]" placeholder="Fourth Option" required minlength="1">
+      </div>
+    </div>
+    <label>Correct Answer (0-3):</label>
+    <input type="number" class="form-control" name="questions[${questionCount-1}][correctAnswer]" min="0" max="3" required>
+    <small class="text-muted">Enter 0 for first option, 1 for second, 2 for third, or 3 for fourth option</small>
+  `;
+  
+  container.appendChild(newQuestion);
+}
+
+function validateForm() {
+  const questions = document.querySelectorAll('.question-block');
+  let isValid = true;
+  
+  questions.forEach((question, index) => {
+    const correctAnswer = question.querySelector('input[type="number"]').value;
+    const options = question.querySelectorAll('.options-container input[type="text"]');
+    
+    // Check if correct answer is between 0 and 3
+    if (correctAnswer < 0 || correctAnswer > 3) {
+      alert(`Question ${index + 1}: Correct answer must be between 0 and 3`);
+      isValid = false;
+      return;
+    }
+    
+    // Check if all options have content
+    options.forEach((option, optIndex) => {
+      if (option.value.trim() === '') {
+        alert(`Question ${index + 1}: Option ${optIndex} cannot be empty`);
+        isValid = false;
+        return;
+      }
+    });
+  });
+  
+  return isValid;
+}
+</script>
+
+<style>
+.option-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.option-wrapper label {
+  min-width: 25px;
+  color: white;
+}
+
+input[type="number"] {
+  width: 100px;
+}
+</style>
